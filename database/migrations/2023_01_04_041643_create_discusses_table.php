@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('discusses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->string('title');
+            $table->text('body');
+            $table->string('picture')->nullable();
+            $table->text('excerpt');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

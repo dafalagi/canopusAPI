@@ -17,7 +17,10 @@ class ReportFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'comment_id' => mt_rand(1, 100),
+            'discuss_id' => mt_rand(1, 30),
+            'content_id' => mt_rand(1, 100),
+            'user_id' => mt_rand(1, 20),
         ];
     }
 }
