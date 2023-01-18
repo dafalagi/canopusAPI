@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             // CommentSeeder::class,
             FavoriteSeeder::class,
             // LikeSeeder::class,
-            ReportSeeder::class,
+            // ReportSeeder::class,
         ]);
 
     }
