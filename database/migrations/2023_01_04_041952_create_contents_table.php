@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->longText('intro');
             $table->longText('history');
-            $table->enum('category', ['Planet', 'Bintang', 'Rasi Bintang', 'Lainnya di Angkasa']);
+            $table->string('category');
             $table->string('coordinate')->nullable();
             $table->string('distance')->nullable();
-            $table->enum('event', ['Merkurius', 'Venus', 'Bumi', 'Mars', 'Jupiter', 'Saturnus', 'Uranus', 'Neptunus', 
-            'Ceres', 'Eris', 'Pluto', 'Makemake', 'Haumea'])->nullable();
+            $table->string('event')->nullable();
             $table->text('excerpt');
             $table->string('mainpicture')->nullable();
             $table->json('pictures')->nullable();

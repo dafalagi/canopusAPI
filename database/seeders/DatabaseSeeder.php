@@ -17,15 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UserSeeder::class,
-            ContentSeeder::class,
-            DiscussSeeder::class,
-            CommentSeeder::class,
-            ReportSeeder::class,
-            FavoriteSeeder::class,
-        ]);
-
         User::create([
             'username' => 'dafalagi',
             'email' => 'dafa.unknown@gmail.com',
@@ -33,5 +24,16 @@ class DatabaseSeeder extends Seeder
             'bio' => 'admin',
             'is_admin' => true
         ]);
+
+        $this->call([
+            UserSeeder::class,
+            ContentSeeder::class,
+            // DiscussSeeder::class,
+            // CommentSeeder::class,
+            FavoriteSeeder::class,
+            // LikeSeeder::class,
+            ReportSeeder::class,
+        ]);
+
     }
 }

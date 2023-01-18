@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ContentCategory;
+use App\Enums\ContentEvent;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,8 @@ class Content extends Model
     protected $guarded = ['id'];
     protected $casts = [
         'pictures' => 'array',
+        'event' => ContentEvent::class,
+        'category' => ContentCategory::class,
     ];
 
     public function scopeFilter($query, $filters)

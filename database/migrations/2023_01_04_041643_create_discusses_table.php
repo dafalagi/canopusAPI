@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('discusses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->text('body');
             $table->string('picture')->nullable();
