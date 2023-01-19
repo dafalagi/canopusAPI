@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\ResponseCode;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', User::class);
+
+        $index = User::filter(request('username'))->get();
+
+        return $this->sendResponse($index, 'Data retrieved successfully.');
     }
 
     /**
@@ -23,9 +30,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $this->authorize('create', User::class);
+
+        $validated = $request->validated();
+
+        $store = User::create($validated);
+
+        return response($store, 'Data stored successfully.');
     }
 
     /**
@@ -36,7 +49,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $this->authorize('view', $user);
+
+        return $this->sendResponse($user, 'Data retrieved successfully.');
     }
 
     /**
@@ -46,9 +61,15 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        $validated = $request->validated();
+
+        $update = $user->update($validated);
+
+        return $this->sendResponse($update, 'Data updated successfully.');
     }
 
     /**
@@ -59,6 +80,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $this->authorize('delete', $user);
+
+        $user->delete();
+
+        return $this->sendResponse(null, 'Data deleted successfully.');
     }
 }
