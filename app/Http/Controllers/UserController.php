@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\ResponseCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends BaseController
 {
@@ -65,7 +67,60 @@ class UserController extends BaseController
     {
         $this->authorize('update', $user);
 
-        $validated = $request->validated();
+        if($request->username && $request->email)
+        {
+            if($request->username != $user->username && $request->email != $user->email)
+            {
+                $validator = Validator::make($request->all(),[
+                    'username' => 'unique:users|string|min:6|max:30',
+                    'email' => 'unique:users|email:dns',
+                ]);
+
+                if($validator->fails()){
+                    return $this->sendError($validator->errors(), ResponseCode::BAD_REQUEST);
+                }
+
+                $validated = $request->safe()->merge($validator)->toArray();
+            }else if($request->username != $user->username)
+            {
+                $validator = Validator::make($request->all(),[
+                    'username' => 'unique:users|string|min:6|max:30',
+                ]);
+
+                if($validator->fails()){
+                    return $this->sendError($validator->errors(), ResponseCode::BAD_REQUEST);
+                }
+
+                $validated = $request->safe()->merge($validator)->toArray();
+            }else if($request->email != $user->email)
+            {
+                $validator = Validator::make($request->all(),[
+                    'email' => 'unique:users|email:dns',
+                ]);
+
+                if($validator->fails()){
+                    return $this->sendError($validator->errors(), ResponseCode::BAD_REQUEST);
+                }
+
+                $validated = $request->safe()->merge($validator)->toArray();
+            }else
+            {
+                $validated = $request->validated();
+            }
+        }else
+        {
+            $validated = $request->validated();
+        }
+
+        if(isset($validated['password']))
+        {
+            if(!Hash::check($validated['current_password'], $user->password))
+            {
+                return $this->sendError('Password does not match.', ResponseCode::BAD_REQUEST);
+            }
+
+            $validated['password'] = Hash::make($validated['password']);
+        }
 
         $update = $user->update($validated);
 
@@ -81,6 +136,8 @@ class UserController extends BaseController
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
+
+        $user->tokens()->delete();
 
         $user->delete();
 
