@@ -15,6 +15,7 @@ class Content extends Model
     protected $guarded = ['id'];
     protected $casts = [
         'pictures' => 'array',
+        'videoIds' => 'array',
         'event' => ContentEvent::class,
         'category' => ContentCategory::class,
     ];

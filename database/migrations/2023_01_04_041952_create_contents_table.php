@@ -27,6 +27,7 @@ return new class extends Migration
             $table->json('pictures')->nullable();
             $table->string('slug')->unique();
             $table->text('trivia');
+            $table->json('videoIds')->nullable();
             $table->timestamps();
         });
     }
