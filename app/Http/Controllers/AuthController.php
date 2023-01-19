@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\ResponseCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends BaseController
 {
@@ -23,7 +22,6 @@ class AuthController extends BaseController
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('CanopusID')->plainTextToken;
         $success['user'] =  $user;
    
         return $this->sendResponse($success, 'User registered successfully.');
@@ -46,7 +44,7 @@ class AuthController extends BaseController
             return $this->sendResponse($success, 'User logged in successfully.');
         } 
         else{ 
-            return $this->sendError('Unauthorized.', ['error'=>'Unauthorized']);
+            return $this->sendError('Login failed.', ResponseCode::BAD_REQUEST);
         } 
     }
 
