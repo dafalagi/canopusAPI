@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class FavoritePolicy
 {
@@ -18,7 +19,11 @@ class FavoritePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if(Auth::check()){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -30,7 +35,11 @@ class FavoritePolicy
      */
     public function view(User $user, Favorite $favorite)
     {
-        //
+        if($user->is_admin == true){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -41,7 +50,11 @@ class FavoritePolicy
      */
     public function create(User $user)
     {
-        //
+        if(Auth::check()){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -53,7 +66,11 @@ class FavoritePolicy
      */
     public function update(User $user, Favorite $favorite)
     {
-        //
+        if($user->is_admin == true){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -65,7 +82,11 @@ class FavoritePolicy
      */
     public function delete(User $user, Favorite $favorite)
     {
-        //
+        if(Auth::check() && $favorite->user_id == $user->id){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -77,7 +98,11 @@ class FavoritePolicy
      */
     public function restore(User $user, Favorite $favorite)
     {
-        //
+        if($user->username == 'dafalagi'){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -89,6 +114,10 @@ class FavoritePolicy
      */
     public function forceDelete(User $user, Favorite $favorite)
     {
-        //
+        if($user->username == 'dafalagi'){
+            return true;
+        }
+
+        return false;
     }
 }

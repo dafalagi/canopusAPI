@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Content;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class ContentPolicy
 {
@@ -18,7 +19,11 @@ class ContentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if(Auth::check()){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -30,7 +35,11 @@ class ContentPolicy
      */
     public function view(User $user, Content $content)
     {
-        //
+        if(Auth::check()){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -41,7 +50,11 @@ class ContentPolicy
      */
     public function create(User $user)
     {
-        //
+        if($user->is_admin == true){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -53,7 +66,11 @@ class ContentPolicy
      */
     public function update(User $user, Content $content)
     {
-        //
+        if($user->is_admin == true){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -65,7 +82,11 @@ class ContentPolicy
      */
     public function delete(User $user, Content $content)
     {
-        //
+        if($user->is_admin == true){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -77,7 +98,11 @@ class ContentPolicy
      */
     public function restore(User $user, Content $content)
     {
-        //
+        if($user->username == 'dafalagi'){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -89,6 +114,10 @@ class ContentPolicy
      */
     public function forceDelete(User $user, Content $content)
     {
-        //
+        if($user->username == 'dafalagi'){
+            return true;
+        }
+
+        return false;
     }
 }
