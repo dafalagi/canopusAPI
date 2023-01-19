@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('content_id')->constrained()->onUpdate('cascade')->onDelete('cascade')
                   ->nullable();
-            $table->foreignId('discuss_id')->constrained()->onUpdate('cascade')->onDelete('cascade')
-                  ->nullable();
+            // $table->foreignId('discuss_id')->constrained()->onUpdate('cascade')->onDelete('cascade')
+            //       ->nullable();
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ class FavoriteFactory extends Factory
         return [
             'user_id' => mt_rand(1, 21),
             'content_id' => mt_rand(1, 100),
-            'discuss_id' => mt_rand(1, 30),
+            // 'discuss_id' => mt_rand(1, 30),
         ];
     }
 }
