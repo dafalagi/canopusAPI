@@ -6,7 +6,7 @@ use App\Models\Favorite;
 use App\Http\Requests\StoreFavoriteRequest;
 use App\Http\Requests\UpdateFavoriteRequest;
 
-class FavoriteController extends Controller
+class FavoriteController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,11 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', Favorite::class);
+
+        $index = Favorite::filter(request(['search', 'username']))->get();
+
+        return $this->sendResponse($index, 'Data retrieved successfully.');
     }
 
     /**
@@ -47,7 +51,9 @@ class FavoriteController extends Controller
      */
     public function show(Favorite $favorite)
     {
-        //
+        $this->authorize('view', $favorite);
+
+        return $this->sendResponse($favorite, 'Data retrieved successfully.');
     }
 
     /**

@@ -13,9 +13,15 @@ class Favorite extends Model
 
     public function scopeFilter($query, $filters)
     {
-        $query->when($filters ?? false, function($query, $search)
+        $query->when($filters['search'] ?? false, function($query, $search)
         {
             return $query->where('id', 'like', '%'.$search.'%');
+        });
+
+        $query->when($filters['username'] ?? false, function($query, $username){
+            return $query->whereHas('user', function($query) use ($username){
+                $query->where('username', $username);
+            });
         });
     }
 
