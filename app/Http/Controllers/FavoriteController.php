@@ -23,16 +23,6 @@ class FavoriteController extends BaseController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreFavoriteRequest  $request
@@ -40,7 +30,13 @@ class FavoriteController extends BaseController
      */
     public function store(StoreFavoriteRequest $request)
     {
-        //
+        $this->authorize('create', Favorite::class);
+
+        $validated = $request->validated();
+
+        $store = Favorite::create($validated);
+
+        return $this->sendResponse($store, 'Data stored successfully.');
     }
 
     /**
@@ -57,17 +53,6 @@ class FavoriteController extends BaseController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Favorite  $favorite
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Favorite $favorite)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateFavoriteRequest  $request
@@ -76,7 +61,12 @@ class FavoriteController extends BaseController
      */
     public function update(UpdateFavoriteRequest $request, Favorite $favorite)
     {
-        //
+        $this->authorize('update', $favorite);
+
+        $validated = $request->validated();
+        $update = $favorite->update($validated);
+
+        return $this->sendResponse($update, 'Data updated successfully.');
     }
 
     /**
@@ -87,6 +77,10 @@ class FavoriteController extends BaseController
      */
     public function destroy(Favorite $favorite)
     {
-        //
+        $this->authorize('delete', $favorite);
+
+        $favorite->delete();
+
+        return $this->sendResponse(null, 'Data deleted successfully.');
     }
 }
