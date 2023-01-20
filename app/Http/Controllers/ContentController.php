@@ -6,7 +6,7 @@ use App\Models\Content;
 use App\Http\Requests\StoreContentRequest;
 use App\Http\Requests\UpdateContentRequest;
 
-class ContentController extends Controller
+class ContentController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,11 @@ class ContentController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', Content::class);
+
+        $index = Content::filter(request(['search', 'category', 'event']))->get();
+
+        return $this->sendResponse($index, 'Data retrieved successfully.');
     }
 
     /**
@@ -47,7 +51,9 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        //
+        $this->authorize('view', $content);
+
+        return $this->sendResponse($content, 'Data retrieved successfully.');
     }
 
     /**

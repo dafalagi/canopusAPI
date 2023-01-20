@@ -20,13 +20,21 @@ class Content extends Model
         'category' => ContentCategory::class,
     ];
 
-    public function scopeFilter($query, $filters)
+    public function scopeFilter($query, array $filters)
     {
-        $query->when($filters ?? false, function($query, $search)
+        $query->when($filters['search'] ?? false, function($query, $search)
         {
             return $query->where('title', 'like', '%'.$search.'%')
                          ->orWhere('intro', 'like', '%'.$search.'%')
                          ->orWhere('history', 'like', '%'.$search.'%');
+        });
+
+        $query->when($filters['category'] ?? false, function($query, $category){
+            return $query->where('category', $category);
+        });
+
+        $query->when($filters['event'] ?? false, function($query, $event){
+            return $query->where('event', $event);
         });
     }
 
