@@ -36,7 +36,7 @@ class StoreContentRequest extends FormRequest
             'event' => 'nullable|'.[new Enum(ContentEvent::class)],
             'mainpicture' => 'nullable|string',
             'pictures' => 'nullable',
-            'trivia' => 'required|string|min:10',
+            'trivia' => 'nullable|string|min:10',
             'videoId' => 'nullable|string'
         ];
     }
