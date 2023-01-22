@@ -19,7 +19,7 @@ class ContentController extends BaseController
     {
         $this->authorize('viewAny', Content::class);
 
-        $index = Content::filter(request(['search', 'category', 'event']))->get();
+        $index = Content::filter(request(['search', 'title', 'category', 'event']))->get();
 
         return $this->sendResponse($index, 'Data retrieved successfully.');
     }

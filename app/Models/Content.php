@@ -29,6 +29,10 @@ class Content extends Model
                          ->orWhere('history', 'like', '%'.$search.'%');
         });
 
+        $query->when($filters['title'] ?? false, function($query, $title){
+            return $query->where('title', $title);
+        });
+
         $query->when($filters['category'] ?? false, function($query, $category){
             return $query->where('category', $category);
         });
