@@ -52,11 +52,6 @@ class Content extends Model
         return $this->hasMany(Report::class);
     }
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
     public function sluggable(): array
     {
         return [
