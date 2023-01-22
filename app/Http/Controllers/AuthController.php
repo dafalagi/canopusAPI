@@ -37,9 +37,12 @@ class AuthController extends BaseController
         $credentials = $request->getCredentials();
 
         if(Auth::attempt($credentials)){ 
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('CanopusID')->plainTextToken; 
-            $success['user'] =  $user;
+            $user = Auth::user();
+            $success = [
+                'token' => $user->createToken('CanopusID')->plainTextToken,
+                'type' => 'bearer',
+                'user' => $user,
+            ];
    
             return $this->sendResponse($success, 'User logged in successfully.');
         } 
