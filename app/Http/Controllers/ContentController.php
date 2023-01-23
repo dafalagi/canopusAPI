@@ -17,8 +17,6 @@ class ContentController extends BaseController
      */
     public function index()
     {
-        $this->authorize('viewAny', Content::class);
-
         $index = Content::filter(request(['search', 'title', 'category', 'event']))->get();
 
         return $this->sendResponse($index, 'Data retrieved successfully.');
@@ -52,8 +50,6 @@ class ContentController extends BaseController
      */
     public function show(Content $content)
     {
-        $this->authorize('view', $content);
-
         return $this->sendResponse($content, 'Data retrieved successfully.');
     }
 
