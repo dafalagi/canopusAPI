@@ -65,7 +65,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        if($user->is_admin == true){
+        if($user->username == $model->username){
             return true;
         }
 
