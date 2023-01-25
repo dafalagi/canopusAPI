@@ -80,7 +80,7 @@ class UserController extends BaseController
                     return $this->sendError($validator->errors(), ResponseCode::BAD_REQUEST);
                 }
 
-                $validated = $request->safe()->merge($validator)->toArray();
+                $validated = $request->safe()->merge($validator->validated())->toArray();
             }else if($request->username != $user->username)
             {
                 $validator = Validator::make($request->all(),[
@@ -91,7 +91,7 @@ class UserController extends BaseController
                     return $this->sendError($validator->errors(), ResponseCode::BAD_REQUEST);
                 }
 
-                $validated = $request->safe()->merge($validator)->toArray();
+                $validated = $request->safe()->merge($validator->validated())->toArray();
             }else if($request->email != $user->email)
             {
                 $validator = Validator::make($request->all(),[
@@ -102,7 +102,7 @@ class UserController extends BaseController
                     return $this->sendError($validator->errors(), ResponseCode::BAD_REQUEST);
                 }
 
-                $validated = $request->safe()->merge($validator)->toArray();
+                $validated = $request->safe()->merge($validator->validated())->toArray();
             }else
             {
                 $validated = $request->validated();
