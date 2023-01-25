@@ -32,9 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth.default');
 
     // RESOURCES
+    Route::apiResource('/content', ContentController::class)->except(['index', 'show']);
     Route::apiResources([
         'user' => UserController::class,
-        'content' => ContentController::class,
         'favorite' => FavoriteController::class,
     ]);
 });
