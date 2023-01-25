@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+// GET
+Route::get('/content', [ContentController::class, 'index']);
+Route::get('/content/{content}', [ContentController::class, 'show']);
+
 // AUTHENTICATED ONLY
 Route::middleware('auth:sanctum')->group(function () {
     // POST
