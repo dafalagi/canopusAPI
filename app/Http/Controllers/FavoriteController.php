@@ -18,7 +18,7 @@ class FavoriteController extends BaseController
     {
         $this->authorize('viewAny', Favorite::class);
 
-        $index = Favorite::filter(request(['search', 'username']))->get();
+        $index = Favorite::filter(request(['search', 'username', 'content']))->get();
 
         return $this->sendResponse($index, 'Data retrieved successfully.');
     }
