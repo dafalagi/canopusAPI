@@ -24,7 +24,7 @@ class UpdateFavoriteRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users',
+            'username' => 'required|exists:users',
             'content_id' => 'required|exists:contents'
         ];
     }

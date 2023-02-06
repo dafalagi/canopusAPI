@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favorite;
 use App\Http\Requests\StoreFavoriteRequest;
 use App\Http\Requests\UpdateFavoriteRequest;
+use App\Models\User;
 
 class FavoriteController extends BaseController
 {
@@ -33,7 +34,8 @@ class FavoriteController extends BaseController
         $this->authorize('create', Favorite::class);
 
         $validated = $request->validated();
-
+        $validated['user_id'] = User::where('username', $validated['username'])->first()->id;
+        
         $store = Favorite::create($validated);
 
         return $this->sendResponse($store, 'Data stored successfully.');
@@ -64,6 +66,8 @@ class FavoriteController extends BaseController
         $this->authorize('update', $favorite);
 
         $validated = $request->validated();
+        $validated['user_id'] = User::where('username', $validated['username'])->first()->id;
+
         $update = $favorite->update($validated);
 
         return $this->sendResponse($update, 'Data updated successfully.');
