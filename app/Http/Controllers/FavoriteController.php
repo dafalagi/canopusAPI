@@ -20,6 +20,10 @@ class FavoriteController extends BaseController
 
         $index = Favorite::filter(request(['search', 'username', 'content']))->get();
 
+        if(request('first') == 'true'){
+            $index = $index->first();
+        }
+
         return $this->sendResponse($index, 'Data retrieved successfully.');
     }
 
