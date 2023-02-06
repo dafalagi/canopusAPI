@@ -25,7 +25,7 @@ class UpdateFavoriteRequest extends FormRequest
     {
         return [
             'username' => 'required|exists:users',
-            'content_id' => 'required|exists:contents'
+            'content_id' => 'required|exists:contents,id'
         ];
     }
 }
