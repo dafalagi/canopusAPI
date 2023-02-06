@@ -23,6 +23,12 @@ class Favorite extends Model
                 $query->where('username', $username);
             });
         });
+
+        $query->when($filters['content'] ?? false, function($query, $content){
+            return $query->whereHas('content', function($query) use ($content){
+                $query->where('id', $content);
+            });
+        });
     }
 
     public function user()
