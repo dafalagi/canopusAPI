@@ -76,7 +76,7 @@ class ContentController extends BaseController
             $validated = $request->validated();
         }
 
-        if($request->intro != $content->intro)
+        if(isset($validated['intro']) && $validated['intro'] != $content->intro)
         {
             $validated['excerpt'] = Str::limit(strip_tags($validated['intro']), 200, '...');
         }
