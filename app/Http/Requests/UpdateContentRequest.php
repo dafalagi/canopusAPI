@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ContentCategory;
+use App\Enums\ContentEvent;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -31,7 +33,7 @@ class UpdateContentRequest extends FormRequest
             'category' => [new Enum(ContentCategory::class)],
             'coordinate' => 'nullable|string',
             'distance' => 'nullable|string',
-            'event' => [new Enum(ContentCategory::class)],
+            'event' => [new Enum(ContentEvent::class)],
             'mainpicture' => 'nullable|string',
             'pictures' => 'nullable',
             'trivia' => 'nullable|string|min:10',

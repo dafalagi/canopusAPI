@@ -64,7 +64,7 @@ class ContentController extends BaseController
     {
         $this->authorize('update', $content);
 
-        if($request->title != $content->title)
+        if(isset($request->title) && $request->title != $content->title)
         {
             $add = $request->validate([
                 'title' => 'string|unique:contents|min:4'
