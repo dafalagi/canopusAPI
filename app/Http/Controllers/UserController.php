@@ -40,7 +40,7 @@ class UserController extends BaseController
 
         $store = User::create($validated);
 
-        return response($store, 'Data stored successfully.');
+        return $this->sendResponse($store, 'Data stored successfully.');
     }
 
     /**
