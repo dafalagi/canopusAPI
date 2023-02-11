@@ -34,7 +34,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        if($user->username == $model->username || $user->is_admin == 'true'){
+        if($user->username == $model->username || $user->is_admin == true){
             return true;
         }
 
