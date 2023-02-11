@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ContentEvent;
 use App\Models\Content;
 use App\Http\Requests\StoreContentRequest;
 use App\Http\Requests\UpdateContentRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Enum;
 
 class ContentController extends BaseController
 {
@@ -33,6 +36,18 @@ class ContentController extends BaseController
         $this->authorize('create', Content::class);
 
         $validated = $request->validated();
+
+        if($validated['event']){
+            $validator = Validator::make($validated, [
+                'event' => [new Enum(ContentEvent::class)],
+            ]);
+
+            if($validator->fails()){
+                return $this->sendError($validator->errors(), 400);
+            }
+
+            $validated = array_merge($validated, $validator->validated());
+        }
 
         $validated['slug'] = SlugService::createSlug(Content::class, 'slug', $validated['title']);
         $validated['excerpt'] = Str::limit(strip_tags($validated['intro']), 200, '...');
@@ -74,6 +89,18 @@ class ContentController extends BaseController
         }else
         {
             $validated = $request->validated();
+        }
+
+        if($validated['event']){
+            $validator = Validator::make($validated, [
+                'event' => [new Enum(ContentEvent::class)],
+            ]);
+
+            if($validator->fails()){
+                return $this->sendError($validator->errors(), 400);
+            }
+
+            $validated = array_merge($validated, $validator->validated());
         }
 
         if(isset($validated['intro']) && $validated['intro'] != $content->intro)

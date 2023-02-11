@@ -33,7 +33,7 @@ class UpdateContentRequest extends FormRequest
             'category' => [new Enum(ContentCategory::class)],
             'coordinate' => 'nullable|string',
             'distance' => 'nullable|string',
-            'event' => [new Enum(ContentEvent::class)],
+            'event' => 'nullable|string',
             'mainpicture' => 'nullable|string',
             'pictures' => 'nullable',
             'trivia' => 'nullable|string|min:10',

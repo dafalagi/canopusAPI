@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum ContentEvent: string
 {
+    case Matahari = 'Matahari';
     case Merkurius = 'Merkurius';
     case Venus = 'Venus';
     case Bumi = 'Bumi';
