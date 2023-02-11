@@ -25,15 +25,15 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true
         ]);
 
-        $this->call([
-            UserSeeder::class,
-            ContentSeeder::class,
-            // DiscussSeeder::class,
-            // CommentSeeder::class,
-            FavoriteSeeder::class,
-            // LikeSeeder::class,
-            // ReportSeeder::class,
-        ]);
+        // $this->call([
+        //     UserSeeder::class,
+        //     ContentSeeder::class,
+        //     // DiscussSeeder::class,
+        //     // CommentSeeder::class,
+        //     FavoriteSeeder::class,
+        //     // LikeSeeder::class,
+        //     // ReportSeeder::class,
+        // ]);
 
     }
 }
