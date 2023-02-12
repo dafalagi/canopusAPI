@@ -37,7 +37,7 @@ class ContentController extends BaseController
 
         $validated = $request->validated();
 
-        if($validated['event']){
+        if(isset($validated['event'])){
             $validator = Validator::make($validated, [
                 'event' => [new Enum(ContentEvent::class)],
             ]);
@@ -91,7 +91,7 @@ class ContentController extends BaseController
             $validated = $request->validated();
         }
 
-        if($validated['event']){
+        if(isset($validated['event'])){
             $validator = Validator::make($validated, [
                 'event' => [new Enum(ContentEvent::class)],
             ]);
